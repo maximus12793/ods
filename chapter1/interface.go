@@ -17,3 +17,17 @@ type List interface {
 	Add(int, interface{})
 	Remove(int) interface{}
 }
+
+type USet interface {
+	Size() int
+	Add(interface{}) bool
+	Remove(interface{}) interface{}
+	Find(interface{}) interface{}
+}
+
+type SSet interface {
+	Size() int
+	Add(interface{}) bool
+	Remove(interface{}) interface{}
+	Find(interface{}) interface{}
+}
