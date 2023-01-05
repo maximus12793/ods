@@ -62,3 +62,27 @@ func TestArrayStack(t *testing.T) {
 		t.Errorf("stack.Size(): expected %d, got %d", 0, stack.Size())
 	}
 }
+
+func TestArrayQueue(t *testing.T) {
+	queue := ArrayQueue{}
+	queue.Init()
+
+	// Test size
+	if queue.Size() != 0 {
+		t.Error("Expected size 0, got", queue.Size())
+	}
+
+	// Test add
+	queue.Add(0, 123)
+	if queue.Size() != 1 {
+		t.Error("Expected size 1, got", queue.Size())
+	}
+
+	// Test remove
+	if v := queue.Remove(); v != 123 {
+		t.Error("Expected 123, got", v)
+	}
+	if queue.Size() != 0 {
+		t.Error("Expected size 0, got", queue.Size())
+	}
+}
