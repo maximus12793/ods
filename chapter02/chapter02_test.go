@@ -86,3 +86,68 @@ func TestArrayQueue(t *testing.T) {
 		t.Error("Expected size 0, got", queue.Size())
 	}
 }
+
+func TestArrayDeque(t *testing.T) {
+	d := ArrayDeque{}
+	d.Init()
+
+	// Test Size
+	if d.Size() != 0 {
+		t.Errorf("Expected deque to be empty, but got size %d", d.Size())
+	}
+
+	// Test Add and Get
+	d.Add(0, 1)
+	d.Add(1, 2)
+	d.Add(2, 3)
+	if d.Size() != 3 {
+		t.Errorf("Expected deque to have size 3, but got %d", d.Size())
+	}
+	if d.Get(0) != 1 {
+		t.Errorf("Expected element at index 0 to be 1, but got %v", d.Get(0))
+	}
+	if d.Get(1) != 2 {
+		t.Errorf("Expected element at index 1 to be 2, but got %v", d.Get(1))
+	}
+	if d.Get(2) != 3 {
+		t.Errorf("Expected element at index 2 to be 3, but got %v", d.Get(2))
+	}
+
+	// Test Set
+	d.Set(1, 4)
+	if d.Get(1) != 4 {
+		t.Errorf("Expected element at index 1 to be 4, but got %v", d.Get(1))
+	}
+
+	// Test Remove
+	d.Remove(1)
+	if d.Size() != 2 {
+		t.Errorf("Expected deque to have size 2, but got %d", d.Size())
+	}
+	if d.Get(1) != 3 {
+		t.Errorf("Expected element at index 1 to be 3, but got %v", d.Get(1))
+	}
+}
+
+func TestArrayDequeResize(t *testing.T) {
+	d := ArrayDeque{}
+	d.Init()
+
+	// Add elements until the deque becomes full
+	for i := 0; i < 10; i++ {
+		d.Add(i, i)
+	}
+
+	// Check that the deque is full
+	if d.Size() != 10 {
+		t.Errorf("Expected deque to have size 10, but got %d", d.Size())
+	}
+
+	// Add one more element to trigger a resize
+	d.Add(10, 10)
+
+	// Check that the deque was resized
+	if d.Size() != 11 {
+		t.Errorf("Expected deque to have size 11, but got %d", d.Size())
+	}
+}
