@@ -1,6 +1,9 @@
 package ods
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func TestArrayStack(t *testing.T) {
 	stack := ArrayStack{}
@@ -149,5 +152,72 @@ func TestArrayDequeResize(t *testing.T) {
 	// Check that the deque was resized
 	if d.Size() != 11 {
 		t.Errorf("Expected deque to have size 11, but got %d", d.Size())
+	}
+}
+
+func TestDualArrayDeque(t *testing.T) {
+	d := DualArrayDeque{}
+	d.Init()
+
+	// Test Size method
+	if d.Size() != 0 {
+		t.Errorf("Expected size 0, got %d", d.Size())
+	}
+
+	// Test Add and Get methods
+	d.Add(0, "a")
+	d.Add(1, "b")
+	d.Add(2, "c")
+	if d.Get(0) != "a" {
+		t.Errorf("Expected element at index 0 to be 'a', got %v", d.Get(0))
+	}
+	if d.Get(1) != "b" {
+		t.Errorf("Expected element at index 1 to be 'b', got %v", d.Get(1))
+	}
+	if d.Get(2) != "c" {
+		t.Errorf("Expected element at index 2 to be 'c', got %v", d.Get(2))
+	}
+
+	// Test Set method
+	d.Set(1, "d")
+	if d.Get(1) != "d" {
+		t.Errorf("Expected element at index 1 to be 'd', got %v", d.Get(1))
+	}
+
+	// Test Remove method
+	d.Remove(1)
+	if d.Get(1) != "c" {
+		t.Errorf("Expected element at index 1 to be 'c', got %v", d.Get(1))
+	}
+}
+
+func TestDualArrayDequeAdvanced(t *testing.T) {
+	d := DualArrayDeque{}
+	d.Init()
+
+	// Test balance method
+	for i := 0; i < 1500; i++ {
+		d.Add(i, i)
+	}
+	if math.Abs(float64(d.front.Size()/d.back.Size())) > 3 {
+		t.Errorf("Expected front and back sizes to be roughly equal, got front size %d and back size %d", d.front.Size(), d.back.Size())
+	}
+
+	// Test edge cases of Add, Get, and Set methods
+	d.Add(0, "a")
+	d.Add(d.Size(), "b")
+	if d.Get(0) != "a" {
+		t.Errorf("Expected element at index 0 to be 'a', got %v", d.Get(0))
+	}
+	if d.Get(d.Size()-1) != "b" {
+		t.Errorf("Expected element at index %d to be 'b', got %v", d.Size()-1, d.Get(d.Size()-1))
+	}
+	d.Set(0, "c")
+	d.Set(d.Size()-1, "d")
+	if d.Get(0) != "c" {
+		t.Errorf("Expected element at index 0 to be 'c', got %v", d.Get(0))
+	}
+	if d.Get(d.Size()-1) != "d" {
+		t.Errorf("Expected element at index %d to be 'd', got %v", d.Size()-1, d.Get(d.Size()-1))
 	}
 }
