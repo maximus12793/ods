@@ -13,8 +13,8 @@ func (a *ArrayQueue) Size() int {
 	return a.n
 }
 
-func (a *ArrayQueue) Init() {
-	a.a = make([]interface{}, 1)
+func (a *ArrayQueue) Init(i int) {
+	a.a = make([]interface{}, i)
 	a.j = 0
 	a.n = 0
 }

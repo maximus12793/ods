@@ -11,8 +11,8 @@ func (a *ArrayStack) Size() int {
 	return a.n
 }
 
-func (a *ArrayStack) Init() {
-	a.a = make([]interface{}, 1)
+func (a *ArrayStack) Init(i int) {
+	a.a = make([]interface{}, i)
 	a.n = 0
 }
 

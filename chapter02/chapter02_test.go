@@ -7,7 +7,7 @@ import (
 
 func TestArrayStack(t *testing.T) {
 	stack := ArrayStack{}
-	stack.Init()
+	stack.Init(1)
 
 	if stack.Size() != 0 {
 		t.Errorf("stack.Size(): expected %d, got %d", 0, stack.Size())
@@ -68,7 +68,7 @@ func TestArrayStack(t *testing.T) {
 
 func TestArrayQueue(t *testing.T) {
 	queue := ArrayQueue{}
-	queue.Init()
+	queue.Init(1)
 
 	// Test size
 	if queue.Size() != 0 {
@@ -92,7 +92,7 @@ func TestArrayQueue(t *testing.T) {
 
 func TestArrayDeque(t *testing.T) {
 	d := ArrayDeque{}
-	d.Init()
+	d.Init(1)
 
 	// Test Size
 	if d.Size() != 0 {
@@ -134,7 +134,7 @@ func TestArrayDeque(t *testing.T) {
 
 func TestArrayDequeResize(t *testing.T) {
 	d := ArrayDeque{}
-	d.Init()
+	d.Init(1)
 
 	// Add elements until the deque becomes full
 	for i := 0; i < 10; i++ {
@@ -157,7 +157,7 @@ func TestArrayDequeResize(t *testing.T) {
 
 func TestDualArrayDeque(t *testing.T) {
 	d := DualArrayDeque{}
-	d.Init()
+	d.Init(1)
 
 	// Test Size method
 	if d.Size() != 0 {
@@ -193,7 +193,7 @@ func TestDualArrayDeque(t *testing.T) {
 
 func TestDualArrayDequeAdvanced(t *testing.T) {
 	d := DualArrayDeque{}
-	d.Init()
+	d.Init(1)
 
 	// Test balance method
 	for i := 0; i < 1500; i++ {
@@ -220,4 +220,75 @@ func TestDualArrayDequeAdvanced(t *testing.T) {
 	if d.Get(d.Size()-1) != "d" {
 		t.Errorf("Expected element at index %d to be 'd', got %v", d.Size()-1, d.Get(d.Size()-1))
 	}
+}
+
+func TestRootishArrayStack(t *testing.T) {
+	// Test empty RootishArrayStack
+	ras := RootishArrayStack{}
+	ras.Init()
+	if ras.Size() != 0 {
+		t.Errorf("Expected size 0, got %d", ras.Size())
+	}
+
+	// Test adding and getting elements
+	ras.Add(0, "a")
+	if ras.Size() != 1 {
+		t.Errorf("Expected size 1, got %d", ras.Size())
+	}
+	if ras.Get(0) != "a" {
+		t.Errorf("Expected element 'a', got %v", ras.Get(0))
+	}
+
+	// Test setting elements
+	ras.Set(0, "b")
+	if ras.Get(0) != "b" {
+		t.Errorf("Expected element 'b', got %v", ras.Get(0))
+	}
+
+	// Test removing elements
+	if ras.Remove(0) != "b" {
+		t.Errorf("Expected element 'b', got %v", ras.Remove(0))
+	}
+	if ras.Size() != 0 {
+		t.Errorf("Expected size 0, got %d", ras.Size())
+	}
+}
+
+func TestRootishArrayStackVariant(t *testing.T) {
+	// Test empty RootishArrayStack
+	ras := RootishArrayStack{}
+	ras.Init()
+	if ras.Size() != 0 {
+		t.Errorf("Expected size 0, got %d", ras.Size())
+	}
+
+	// Test adding and getting elements
+	str := "abcdefgh"
+	for i, elem := range str {
+		ras.Add(i, elem)
+	}
+
+	ras.Add(2, 'x')
+	ras.Remove(1)
+	ras.Remove(7)
+	ras.Remove(6)
+
+	// for i, elem := range str {
+	// 	if ras.Get(i) != elem {
+	// 		t.Errorf("Expected element '%c', got %v", elem, ras.Get(i))
+	// 	}
+	// }
+
+	// // Test setting elements
+	// ras.Set(0, 'b')
+	// if ras.Get(0) != 'b' {
+	// 	t.Errorf("Expected element 'b', got %v", ras.Get(0))
+	// }
+	// // Test removing elements
+	// if ras.Remove(0) != 'b' {
+	// 	t.Errorf("Expected element 'b', got %v", ras.Remove(0))
+	// }
+	// if ras.Size() != 0 {
+	// 	t.Errorf("Expected size 0, got %d", ras.Size())
+	// }
 }
