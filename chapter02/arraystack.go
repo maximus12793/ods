@@ -13,7 +13,7 @@ func (a *ArrayStack) Size() int {
 
 func (a *ArrayStack) Init(i int) {
 	a.a = make([]interface{}, i)
-	a.n = 0
+	a.n = i
 }
 
 func (a *ArrayStack) Get(i int) interface{} {

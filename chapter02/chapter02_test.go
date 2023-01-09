@@ -92,7 +92,7 @@ func TestArrayQueue(t *testing.T) {
 
 func TestArrayDeque(t *testing.T) {
 	d := ArrayDeque{}
-	d.Init(1)
+	d.Init()
 
 	// Test Size
 	if d.Size() != 0 {
@@ -134,7 +134,7 @@ func TestArrayDeque(t *testing.T) {
 
 func TestArrayDequeResize(t *testing.T) {
 	d := ArrayDeque{}
-	d.Init(1)
+	d.Init()
 
 	// Add elements until the deque becomes full
 	for i := 0; i < 10; i++ {
@@ -157,7 +157,7 @@ func TestArrayDequeResize(t *testing.T) {
 
 func TestDualArrayDeque(t *testing.T) {
 	d := DualArrayDeque{}
-	d.Init(1)
+	d.Init()
 
 	// Test Size method
 	if d.Size() != 0 {
@@ -193,7 +193,7 @@ func TestDualArrayDeque(t *testing.T) {
 
 func TestDualArrayDequeAdvanced(t *testing.T) {
 	d := DualArrayDeque{}
-	d.Init(1)
+	d.Init()
 
 	// Test balance method
 	for i := 0; i < 1500; i++ {
@@ -261,8 +261,6 @@ func TestRootishArrayStackVariant(t *testing.T) {
 	if ras.Size() != 0 {
 		t.Errorf("Expected size 0, got %d", ras.Size())
 	}
-
-	// Test adding and getting elements
 	str := "abcdefgh"
 	for i, elem := range str {
 		ras.Add(i, elem)
@@ -273,22 +271,20 @@ func TestRootishArrayStackVariant(t *testing.T) {
 	ras.Remove(7)
 	ras.Remove(6)
 
-	// for i, elem := range str {
-	// 	if ras.Get(i) != elem {
-	// 		t.Errorf("Expected element '%c', got %v", elem, ras.Get(i))
-	// 	}
-	// }
+	str = "axcdef"
+	for i, elem := range str {
+		if ras.Get(i) != elem {
+			t.Errorf("Expected element '%c', got %c", elem, ras.Get(i))
+		}
+	}
 
-	// // Test setting elements
-	// ras.Set(0, 'b')
-	// if ras.Get(0) != 'b' {
-	// 	t.Errorf("Expected element 'b', got %v", ras.Get(0))
-	// }
-	// // Test removing elements
-	// if ras.Remove(0) != 'b' {
-	// 	t.Errorf("Expected element 'b', got %v", ras.Remove(0))
-	// }
-	// if ras.Size() != 0 {
-	// 	t.Errorf("Expected size 0, got %d", ras.Size())
-	// }
+	// Test setting elements
+	ras.Set(0, 'b')
+	if ras.Get(0) != 'b' {
+		t.Errorf("Expected element 'b', got %v", ras.Get(0))
+	}
+	// Test removing elements
+	if ras.Remove(0) != 'b' {
+		t.Errorf("Expected element 'b', got %v", ras.Remove(0))
+	}
 }

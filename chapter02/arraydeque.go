@@ -12,8 +12,8 @@ func (a *ArrayDeque) Size() int {
 	return a.n
 }
 
-func (a *ArrayDeque) Init(i int) {
-	a.a = make([]interface{}, i)
+func (a *ArrayDeque) Init() {
+	a.a = make([]interface{}, 1)
 	a.j = 0
 	a.n = 0
 }

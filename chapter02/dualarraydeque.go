@@ -11,12 +11,12 @@ func (a *DualArrayDeque) Size() int {
 	return a.front.Size() + a.back.Size()
 }
 
-func (a *DualArrayDeque) Init(i int) {
+func (a *DualArrayDeque) Init() {
 	a.front = ArrayStack{}
-	a.front.Init(i)
+	a.front.Init(1)
 
 	a.back = ArrayStack{}
-	a.back.Init(i)
+	a.back.Init(1)
 }
 
 func (a *DualArrayDeque) Get(i int) interface{} {
