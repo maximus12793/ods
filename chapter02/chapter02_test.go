@@ -7,7 +7,7 @@ import (
 
 func TestArrayStack(t *testing.T) {
 	stack := ArrayStack{}
-	stack.Init(1)
+	stack.Init()
 
 	if stack.Size() != 0 {
 		t.Errorf("stack.Size(): expected %d, got %d", 0, stack.Size())

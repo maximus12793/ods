@@ -13,10 +13,10 @@ func (a *DualArrayDeque) Size() int {
 
 func (a *DualArrayDeque) Init() {
 	a.front = ArrayStack{}
-	a.front.Init(1)
+	a.front.Init()
 
 	a.back = ArrayStack{}
-	a.back.Init(1)
+	a.back.Init()
 }
 
 func (a *DualArrayDeque) Get(i int) interface{} {
@@ -61,12 +61,12 @@ func (a *DualArrayDeque) balance() {
 		n := a.Size()
 		mid := n / 2
 		f := ArrayStack{}
-		f.Init(1)
+		f.Init()
 		for i := 0; i < mid; i++ {
 			f.Add(i, a.Get(mid-i-1))
 		}
 		b := ArrayStack{}
-		b.Init(1)
+		b.Init()
 		for i := 0; i < n-mid; i++ {
 			b.Add(i, a.Get(mid+i))
 		}

@@ -62,7 +62,7 @@ func (a *RootishArrayStack) Remove(i int) interface{} {
 
 func (a *RootishArrayStack) grow() {
 	new_array_stack := ArrayStack{}
-	new_array_stack.Init(len(a.blocks) + 1)
+	new_array_stack.InitWithSize(len(a.blocks) + 1)
 	a.blocks = append(a.blocks, new_array_stack)
 }
 

@@ -11,9 +11,14 @@ func (a *ArrayStack) Size() int {
 	return a.n
 }
 
-func (a *ArrayStack) Init(i int) {
+func (a *ArrayStack) InitWithSize(i int) {
 	a.a = make([]interface{}, i)
-	a.n = i
+	a.n = 0
+}
+
+func (a *ArrayStack) Init() {
+	a.a = make([]interface{}, 1)
+	a.n = 0
 }
 
 func (a *ArrayStack) Get(i int) interface{} {
