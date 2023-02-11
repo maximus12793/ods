@@ -1,9 +1,19 @@
 use chapter01::interface::List;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Array<T> {
   a: Box<[Option<T>]>,
   n: usize,
+}
+
+impl<T> Array<T> {
+  pub fn new() -> Self {
+    unimplemented!()
+  }
+
+  pub fn length(&self) -> usize {
+    unimplemented!()
+  }
 }
 
 
