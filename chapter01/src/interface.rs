@@ -16,4 +16,16 @@ pub trait List<T> {
     fn remove(&mut self, i: usize) -> Option<T>;
 }
 
-// TODO: 1.2.3 USet Interface
+pub trait USet<T> {
+    fn size(&self) -> usize;
+    fn add(&mut self, x: T) -> bool;
+    fn remove(&mut self, x: T) -> Option<T>;
+    fn find(&self, x: T) -> Option<T>;
+}
+
+pub trait SSet<T> {
+    fn size(&self) -> usize;
+    fn add(&mut self, x: T) -> bool;
+    fn remove(&mut self, x: T) -> Option<T>;
+    fn find(&self, x: T) -> Option<T>;
+}
