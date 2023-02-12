@@ -46,6 +46,7 @@ impl<T: Clone> Queue<T> for Array<T> {
         self.a[(self.j + self.n) % self.length()] = Some(x);
         self.n += 1;
     }
+
     fn remove(&mut self) -> Option<T> {
         let x = self.a[self.j].take();
         self.j = (self.j + 1) % self.length();
