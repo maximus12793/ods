@@ -105,8 +105,10 @@ mod test {
         array_stack.remove(4);
         assert_eq!((array_stack.size(), array_stack.length()), (5, 10));
         array_stack.remove(4);
-        array_stack.remove(3);
         array_stack.set(2, 'i');
+        // Consistent with book.
+        println!("\nArrayStack = {:?}\n", array_stack);
+        array_stack.remove(3);
         assert_eq!((array_stack.size(), array_stack.length()), (3, 6));
         for (i, elem) in "bri".chars().enumerate() {
             assert_eq!(array_stack.get(i), Some(elem));
