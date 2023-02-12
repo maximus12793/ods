@@ -27,16 +27,16 @@ impl<T: Clone> Array<T> {
     }
 
     fn resize(&mut self) {
-        let mut tmp_a = Self::allocate_on_heap(std::cmp::max(self.n * 2, 1));
+        let mut b = Self::allocate_on_heap(std::cmp::max(self.n * 2, 1));
         // Note: simply swapping the variables does not copy the elements from
-        // the old array to the new array. This is because swapping only 
-        // transfers ownership of the memory allocation, not the data stored in 
+        // the old array to the new array. This is because swapping only
+        // transfers ownership of the memory allocation, not the data stored in
         // the arrays. The data stored in the arrays remains unchanged after the
         // swap.
-        std::mem::swap(&mut self.a, &mut tmp_a);
+        std::mem::swap(&mut self.a, &mut b);
         // The assignment here will acctually transfer the data.
         for i in 0..self.n {
-          self.a[i] = tmp_a[i].take();
+            self.a[i] = b[i].take();
         }
     }
 }
@@ -48,15 +48,15 @@ impl<T: Clone> List<T> for Array<T> {
 
     fn add(&mut self, i: usize, x: T) {
         let n = self.n;
-        if n+1 >= self.a.len() {
-          self.resize();
+        if n + 1 >= self.a.len() {
+            self.resize();
         }
         if i >= n {
-          self.a[n] = Some(x);
+            self.a[n] = Some(x);
         } else {
-          self.a[i..n].rotate_right(1);
-          let end = self.a[i].replace(x);
-          self.a[n] = end;
+            self.a[i..n].rotate_right(1);
+            let end = self.a[i].replace(x);
+            self.a[n] = end;
         }
         self.n += 1;
     }
@@ -64,11 +64,11 @@ impl<T: Clone> List<T> for Array<T> {
     fn remove(&mut self, i: usize) -> Option<T> {
         let x = self.a.get_mut(i)?.take();
         if i < self.n {
-          self.a[i..self.n].rotate_left(1);
-          self.n -= 1;
-          if self.a.len() >= 3 * self.n {
-            self.resize();
-          }
+            self.a[i..self.n].rotate_left(1);
+            self.n -= 1;
+            if self.a.len() >= 3 * self.n {
+                self.resize();
+            }
         }
         x
     }
