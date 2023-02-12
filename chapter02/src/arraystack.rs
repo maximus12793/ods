@@ -2,43 +2,84 @@ use chapter01::interface::List;
 
 #[derive(Clone, Debug)]
 pub struct Array<T> {
-  a: Box<[Option<T>]>,
-  n: usize,
+    a: Box<[Option<T>]>,
+    n: usize,
 }
 
-impl<T> Array<T> {
-  pub fn new() -> Self {
-    unimplemented!()
-  }
+impl<T: Clone> Array<T> {
+    pub fn new() -> Self {
+        Self::with_length(1)
+    }
 
-  pub fn length(&self) -> usize {
-    unimplemented!()
-  }
+    fn allocate_on_heap(size: usize) -> Box<[Option<T>]> {
+        vec![None; size].into_boxed_slice()
+    }
+
+    pub fn with_length(capacity: usize) -> Self {
+        Self {
+            a: Self::allocate_on_heap(capacity),
+            n: 0,
+        }
+    }
+
+    pub fn length(&self) -> usize {
+        self.a.len()
+    }
+
+    fn resize(&mut self) {
+        let mut tmp_a = Self::allocate_on_heap(std::cmp::max(self.n * 2, 1));
+        // Note: simply swapping the variables does not copy the elements from
+        // the old array to the new array. This is because swapping only 
+        // transfers ownership of the memory allocation, not the data stored in 
+        // the arrays. The data stored in the arrays remains unchanged after the
+        // swap.
+        std::mem::swap(&mut self.a, &mut tmp_a);
+        // The assignment here will acctually transfer the data.
+        for i in 0..self.n {
+          self.a[i] = tmp_a[i].take();
+        }
+    }
 }
-
-
 
 impl<T: Clone> List<T> for Array<T> {
-  fn size(&self) -> usize {
-    self.n
-  }
+    fn size(&self) -> usize {
+        self.n
+    }
 
-  fn add(&mut self, i: usize, x: T) {
-      unimplemented!()
-  }
+    fn add(&mut self, i: usize, x: T) {
+        let n = self.n;
+        if n+1 >= self.a.len() {
+          self.resize();
+        }
+        if i >= n {
+          self.a[n] = Some(x);
+        } else {
+          self.a[i..n].rotate_right(1);
+          let end = self.a[i].replace(x);
+          self.a[n] = end;
+        }
+        self.n += 1;
+    }
 
-  fn remove(&mut self, i: usize) -> Option<T> {
-      unimplemented!()
-  }
+    fn remove(&mut self, i: usize) -> Option<T> {
+        let x = self.a.get_mut(i)?.take();
+        if i < self.n {
+          self.a[i..self.n].rotate_left(1);
+          self.n -= 1;
+          if self.a.len() >= 3 * self.n {
+            self.resize();
+          }
+        }
+        x
+    }
 
-  fn get(&self, i: usize) -> Option<T> {
-    self.a.get(i)?.as_ref().cloned()
-  }
+    fn get(&self, i: usize) -> Option<T> {
+        self.a.get(i)?.as_ref().cloned()
+    }
 
-  fn set(&mut self, i: usize, x:T) -> Option<T> {
-    self.a.get_mut(i)?.replace(x)
-  }
-  
+    fn set(&mut self, i: usize, x: T) -> Option<T> {
+        self.a.get_mut(i)?.replace(x)
+    }
 }
 
 #[cfg(test)]
