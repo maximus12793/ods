@@ -101,7 +101,7 @@ mod test {
             assert_eq!(array_stack.get(i), Some(elem));
         }
         array_stack.add(5, 'e');
-        assert_eq!((array_stack.size(), array_stack.length()), (6, 10));
+        assert_eq!((array_stack.size(), array_stack.length()), (7, 10));
         array_stack.remove(4);
         array_stack.remove(4);
         assert_eq!((array_stack.size(), array_stack.length()), (5, 10));
