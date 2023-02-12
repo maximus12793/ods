@@ -48,7 +48,7 @@ impl<T: Clone> List<T> for Array<T> {
 
     fn add(&mut self, i: usize, x: T) {
         let n = self.n;
-        if n + 1 >= self.a.len() {
+        if n + 1 >= self.length() {
             self.resize();
         }
         if i >= n {
@@ -66,7 +66,7 @@ impl<T: Clone> List<T> for Array<T> {
         if i < self.n {
             self.a[i..self.n].rotate_left(1);
             self.n -= 1;
-            if self.a.len() >= 3 * self.n {
+            if self.length() >= 3 * self.n {
                 self.resize();
             }
         }
@@ -101,6 +101,7 @@ mod test {
             assert_eq!(array_stack.get(i), Some(elem));
         }
         array_stack.add(5, 'e');
+        assert_eq!((array_stack.size(), array_stack.length()), (6, 10));
         array_stack.remove(4);
         array_stack.remove(4);
         assert_eq!((array_stack.size(), array_stack.length()), (5, 10));
